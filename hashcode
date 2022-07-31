@@ -1,0 +1,49 @@
+import java.util.Objects;
+
+public class Bloodhash {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		hashTest ht=new hashTest(2,"sai");
+		hashTest ht1 =new hashTest(2,"sai");
+		System.out.println(ht);
+		System.out.println(ht.hashCode());
+		System.out.println(ht1);
+		System.out.println(ht1.hashCode());
+		hashTest h[]= {ht,ht1};
+		
+		for (hashTest values : h) {
+			System.out.println(values);
+			
+		}
+	}
+
+}
+class hashTest{
+	int num;
+	String name;
+	public hashTest(int num, String name) {
+		super();
+		this.num = num;
+		this.name = name;
+	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(name, num);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		hashTest other = (hashTest) obj;
+		return Objects.equals(name, other.name) && num == other.num;
+	}
+
+
+	
+	
+}
