@@ -1,0 +1,79 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Scanner;
+public class StudentInsetTest {
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		try {
+			System.out.println("Registering driver....");
+			DriverManager.registerDriver(new org.hsqldb.jdbc.JDBCDriver());
+			System.out.println("driver registered...");
+			System.out.println("trying to connect to the db");
+			Connection conn=DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/xdb");
+			System.out.println("connected to the Db: "+conn);
+			System.out.println("trying to make a prepared statement");
+			PreparedStatement pst =conn.prepareStatement("INSERT INTO STUDENT VALUES(?,?,?,?,?,?);");
+			
+			System.out.println("prepared statement is created..");
+	         Scanner sc1=new Scanner(System.in);
+	         System.out.println("enter rollno");
+	         int rno=sc1.nextInt();
+	         Statement statement =conn.createStatement();
+	         ResultSet rs=statement.executeQuery("select * from STUDENT where ROLLNO="+rno);
+	         if(rs.next()) {
+	        	 
+	 			EmployeeAlreadyExistException eaep=new EmployeeAlreadyExistException("STUDENT already existed");
+	 			throw eaep;
+	         }
+	         
+	        
+	         System.out.println("enter name of the student");
+	         Scanner sc3=new Scanner(System.in);
+	         String sname=sc3.nextLine();
+	         System.out.println("enter day month and year in year-month-day format");
+	         Scanner sc4=new Scanner(System.in);
+	         String Date=sc4.nextLine();
+	         while(Date.charAt(4)!='-' && Date.charAt(7)!='-') {
+	        	 System.out.println("enter ur birthday at correct format");
+	        	 System.out.println("enter again");
+	        	 Date=sc4.nextLine(); 
+	         }
+	         System.out.println("enter day physics score");
+	         Scanner sc5=new Scanner(System.in);
+	         int physics=sc5.nextInt();
+	         System.out.println("enter day chemistry score");
+	         Scanner sc6=new Scanner(System.in);
+	         int chemistry=sc6.nextInt();
+	         System.out.println("enter day maths score");
+	         Scanner sc7=new Scanner(System.in);
+	         int maths=sc7.nextInt();
+	         
+	         
+	        	 
+	        	 
+	        
+	         
+	         
+			pst.setInt(1, rno);
+			pst.setString(2, sname);
+			pst.setString(3, Date);
+			pst.setInt(4, physics);
+			pst.setInt(5, chemistry);
+			pst.setInt(6, maths);
+			System.out.println("trying to execute prepared statement ");
+			int rows=pst.executeUpdate();
+			
+			
+			conn.close();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+}
