@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<script>
+function validateUser(){
+	var useremail=document.getElementById("uemail").value;
+	//var regex= /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+	var regex=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+	if(useremail==""){
+		document.getElementById("userErr").innerHTML='email cannot be blank';
+		return false;
+	} if(!(regex).test(useremail)){
+		document.getElementById("userErr").innerHTML='email must be in right format';
+		return false;
+	}
+	var password=document.getElementById("upass").value
+	  var regularExpression  = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;
+	if(password==""){
+		document.getElementById("passErr").innerHTML='password cannot be blank';
+		return false;
+	}if(!regularExpression.test(password)){
+		document.getElementById("passErr").innerHTML='this Password is not Recomended';
+		return false;
+	}
+	var password2=document.getElementById("upass2").value
+	if(password2!=password){
+		document.getElementById("passErr2").innerHTML='confirm password must be same with password';
+		return false;
+	}
+	return true;
+}
+function clearuserErr(){
+	document.getElementById("userErr").innerHTML='';
+}
+function clearpassErr(){
+	document.getElementById("passErr").innerHTML='';
+}
+</script>
+<body>
+<form action="UserDashboard.html">
+Enter email:<input type=email id="uemail" onKeyUp="clearuserErr()">
+<span id=userErr></span><br>
+Enter Password:<input type=password id="upass" onKeyUp="clearpassErr()">
+<span id=passErr style="color:red;"></span><br>
+Enter confirm  Password:<input type=password id="upass2" >
+<span id=passErr2 style="color:red;"></span><br>
+<input type=submit name=submit value="login" onclick="return validateUser()">
+</form>
+</body>
+</html>
